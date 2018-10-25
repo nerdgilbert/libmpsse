@@ -256,8 +256,8 @@ int gpio_write(struct mpsse_context *mpsse, int pin, int direction)
 	}
 	else
 	{
-		/* The first four pins can't be changed unless we are in a stopped status */
-		if(pin < NUM_GPIOL_PINS && mpsse->status == STOPPED)
+		/* The first four pins can't be changed unless we are in a LOW_BITS_STATUS_STOPPED status */
+		if(pin < NUM_GPIOL_PINS && mpsse->status == LOW_BITS_STATUS_STOPPED)
 		{
 			/* Convert pin number (0-3) to the corresponding pin bit */
 			pin = (GPIO0 << pin);

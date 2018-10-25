@@ -134,8 +134,8 @@ enum mpsse_commands
 
 enum low_bits_status
 {
-	STARTED,
-	STOPPED
+	LOW_BITS_STATUS_STARTED,
+	LOW_BITS_STATUS_STOPPED
 };
 
 struct vid_pid

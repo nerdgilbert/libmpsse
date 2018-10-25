@@ -138,7 +138,7 @@ struct mpsse_context *OpenIndex(int vid, int pid, enum modes mode, int freq, int
 				mpsse->mode = mode;
 				mpsse->vid = vid;
 				mpsse->pid = pid;
-				mpsse->status = STOPPED;
+				mpsse->status = LOW_BITS_STATUS_STOPPED;
 				mpsse->endianess = endianess;
 
 				/* Set the appropriate transfer size for the requested protocol */
@@ -631,7 +631,7 @@ int Start(struct mpsse_context *mpsse)
 	if(is_valid_context(mpsse))
 	{
 
-		if(mpsse->mode == I2C && mpsse->status == STARTED)
+		if(mpsse->mode == I2C && mpsse->status == LOW_BITS_STATUS_STARTED)
 		{
 			/* Set the default pin states while the clock is low since this is an I2C repeated start condition */
 			status |= set_bits_low(mpsse, (mpsse->pidle & ~SK));
@@ -663,12 +663,12 @@ int Start(struct mpsse_context *mpsse)
 			status |= set_bits_low(mpsse, (mpsse->pstart | SK));
 		}
 		
-		mpsse->status = STARTED;
+		mpsse->status = LOW_BITS_STATUS_STARTED;
 	}
 	else
 	{
 		status = MPSSE_FAIL;
-		mpsse->status = STOPPED;
+		mpsse->status = LOW_BITS_STATUS_STOPPED;
 	}
 
 	return status;
@@ -1117,12 +1117,12 @@ int Stop(struct mpsse_context *mpsse)
 			retval |= set_bits_low(mpsse, mpsse->pidle);
 		}
 		
-		mpsse->status = STOPPED;
+		mpsse->status = LOW_BITS_STATUS_STOPPED;
 	}
 	else
 	{
 		retval = MPSSE_FAIL;
-		mpsse->status = STOPPED;
+		mpsse->status = LOW_BITS_STATUS_STOPPED;
 	}
 
 	return retval;
